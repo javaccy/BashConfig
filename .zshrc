@@ -74,3 +74,26 @@ function pattach() {
         tmux att -t $session
     fi
 }
+
+
+function absolute_path_s()
+{
+        for n in $(ls $1 |  sed -n '/Projects$/p')
+        do
+            for nn in $(ls $n)
+            do
+                    echo $1/$n/$nn
+            done
+        done
+}
+function ppps(){
+    if [[ $1 == "" ]]; then
+        PERCOL=percol
+    else
+        PERCOL="percol --query $1"
+    fi
+    absolute_path_s $HOME | eval $PERCOL | sed -n '1p'
+}
+function cdppps(){
+    cd `ppps`
+}
